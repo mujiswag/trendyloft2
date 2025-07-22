@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TRENDYLOFT | Simplicity with a Spark</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
         :root {
             --primary: #8A2BE2;
@@ -26,6 +27,7 @@
             background-color: var(--light);
             color: var(--dark);
             overflow-x: hidden;
+            position: relative;
         }
         
         /* Header Styles */
@@ -47,6 +49,13 @@
             font-weight: 700;
             text-decoration: none;
             color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo-icon {
+            font-size: 1.5rem;
         }
         
         .mobile-menu {
@@ -58,6 +67,9 @@
         .cart-icon {
             position: relative;
             margin-left: 15px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         
         .cart-badge {
@@ -74,6 +86,16 @@
             justify-content: center;
             font-size: 0.7rem;
             font-weight: bold;
+        }
+        
+        .user-icon {
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .user-icon:hover {
+            transform: scale(1.1);
         }
         
         /* Hero Section */
@@ -172,6 +194,7 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
             transform-style: preserve-3d;
+            perspective: 1000px;
         }
         
         .product-card:hover {
@@ -533,41 +556,133 @@
             box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
         }
         
-        /* Cart Modal */
-        .cart-modal {
+        /* Calculator Popup */
+        .calculator-popup {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 300px;
+            z-index: 1001;
+            display: none;
+            overflow: hidden;
+        }
+        
+        .calculator-header {
+            background: var(--gradient);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .calculator-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .calculator-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        .calculator-body {
+            padding: 1rem;
+        }
+        
+        .calculator-display {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            text-align: right;
+            font-size: 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        
+        .calculator-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+        }
+        
+        .calculator-btn {
+            padding: 0.8rem;
+            border: none;
+            background: #f0f0f0;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .calculator-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .calculator-btn.operator {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .calculator-btn.operator:hover {
+            background: var(--secondary);
+        }
+        
+        .calculator-btn.equals {
+            background: var(--accent);
+            color: white;
+            grid-column: span 2;
+        }
+        
+        .calculator-btn.equals:hover {
+            background: #ff7f7f;
+        }
+        
+        /* Login/Signup Modal */
+        .login-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background-color: rgba(0,0,0,0.7);
-            z-index: 1000;
+            z-index: 1002;
             display: none;
             justify-content: center;
             align-items: center;
         }
         
-        .cart-content {
+        .login-content {
             background-color: white;
             border-radius: 15px;
             width: 90%;
-            max-width: 800px;
-            max-height: 80vh;
-            overflow-y: auto;
+            max-width: 500px;
             padding: 2rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         
-        .cart-header {
+        .login-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             padding-bottom: 1rem;
             border-bottom: 1px solid #eee;
         }
         
-        .cart-close {
+        .login-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .login-close {
             background: none;
             border: none;
             font-size: 1.5rem;
@@ -575,102 +690,31 @@
             color: #999;
         }
         
-        .cart-item {
+        .login-tabs {
             display: flex;
-            align-items: center;
-            padding: 1rem 0;
-            border-bottom: 1px solid #eee;
+            margin-bottom: 1.5rem;
         }
         
-        .cart-item-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 8px;
-            object-fit: cover;
-            margin-right: 1rem;
-        }
-        
-        .cart-item-details {
-            flex-grow: 1;
-        }
-        
-        .cart-item-name {
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-        }
-        
-        .cart-item-price {
-            color: var(--primary);
-            font-weight: 600;
-        }
-        
-        .cart-item-code {
-            font-size: 0.8rem;
-            color: #999;
-            margin-top: 0.3rem;
-        }
-        
-        .cart-item-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .cart-remove {
-            background: none;
-            border: none;
-            color: #999;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        
-        .cart-remove:hover {
-            color: var(--accent);
-        }
-        
-        .cart-checkout {
-            background: var(--gradient);
-            color: white;
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 30px;
-            font-weight: 600;
+        .login-tab {
+            flex: 1;
+            text-align: center;
+            padding: 0.8rem;
+            background: #f0f0f0;
             cursor: pointer;
             transition: all 0.3s;
-            width: 100%;
-            margin-top: 1.5rem;
         }
         
-        .cart-checkout:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
+        .login-tab.active {
+            background: var(--primary);
+            color: white;
         }
         
-        .cart-empty {
-            text-align: center;
-            padding: 2rem;
-            color: #999;
+        .login-form {
+            display: none;
         }
         
-        /* Checkout Form Styles */
-        .checkout-form {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid #eee;
-        }
-        
-        .checkout-title {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-            text-align: center;
-        }
-        
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1rem;
+        .login-form.active {
+            display: block;
         }
         
         .form-group {
@@ -699,183 +743,7 @@
             box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.2);
         }
         
-        .form-checkbox {
-            display: flex;
-            align-items: center;
-            margin-top: 1rem;
-        }
-        
-        .form-checkbox input {
-            margin-right: 0.5rem;
-        }
-        
-        .error-message {
-            color: var(--accent);
-            font-size: 0.9rem;
-            margin-top: 0.3rem;
-            display: none;
-        }
-        
-        .checkout-btn {
-            background: var(--gradient);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-            margin-top: 1.5rem;
-        }
-        
-        .checkout-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
-        }
-        
-        /* Bill Modal */
-        .bill-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            z-index: 1001;
-            display: none;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .bill-content {
-            background-color: white;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 800px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        
-        .bill-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .bill-title {
-            font-size: 1.5rem;
-            color: var(--primary);
-        }
-        
-        .bill-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #999;
-        }
-        
-        .bill-details {
-            margin-bottom: 2rem;
-        }
-        
-        .bill-customer {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .bill-customer h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-        
-        .bill-customer-info {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.5rem;
-        }
-        
-        .bill-customer-info div {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .bill-customer-info span:first-child {
-            font-weight: 500;
-            color: #666;
-        }
-        
-        .bill-items {
-            margin-bottom: 1.5rem;
-        }
-        
-        .bill-items h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-        
-        .bill-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .bill-item:last-child {
-            border-bottom: none;
-        }
-        
-        .bill-item-name {
-            font-weight: 500;
-        }
-        
-        .bill-item-price {
-            color: var(--primary);
-        }
-        
-        .bill-total {
-            display: flex;
-            justify-content: space-between;
-            padding: 1rem 0;
-            border-top: 1px solid #eee;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-        
-        .bill-total-label {
-            color: #666;
-        }
-        
-        .bill-total-amount {
-            color: var(--primary);
-        }
-        
-        .bill-payment {
-            background: rgba(255, 99, 71, 0.1);
-            border: 1px solid var(--accent);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 1.5rem;
-            font-weight: 500;
-            color: #666;
-            text-align: center;
-        }
-        
-        .bill-actions {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-        
-        .bill-button {
+        .login-button {
             background: var(--gradient);
             color: white;
             border: none;
@@ -884,64 +752,158 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            width: 100%;
+            margin-top: 1rem;
         }
         
-        .bill-button:hover {
+        .login-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
         }
         
-        /* Notification */
-        .notification {
+        /* Admin Panel */
+        .admin-panel {
             position: fixed;
-            top: 20px;
+            top: 80px;
             right: 20px;
             background: white;
-            border-left: 4px solid var(--primary);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 300px;
+            z-index: 1003;
+            display: none;
+            overflow: hidden;
+        }
+        
+        .admin-header {
+            background: var(--primary);
+            color: white;
             padding: 1rem;
-            border-radius: 4px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            z-index: 1001;
-            max-width: 350px;
-            display: none;
-            animation: slideIn 0.3s ease-out;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        .admin-title {
+            font-size: 1.2rem;
+            font-weight: 600;
         }
         
-        .notification-title {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-        }
-        
-        .notification-close {
-            float: right;
+        .admin-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
             cursor: pointer;
-            font-size: 0.8rem;
-            color: #999;
         }
         
-        /* Delivery Notification */
-        .delivery-notification {
-            background: rgba(255, 99, 71, 0.1);
-            border: 1px solid var(--accent);
-            border-radius: 4px;
+        .admin-body {
+            padding: 1rem;
+        }
+        
+        .admin-actions {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+        }
+        
+        .admin-btn {
             padding: 0.8rem;
-            margin-top: 0.8rem;
-            font-size: 0.9rem;
-            color: #666;
-            display: none;
+            border: none;
+            background: #f0f0f0;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .admin-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .admin-btn.primary {
+            background: var(--gradient);
+            color: white;
+        }
+        
+        .admin-btn.primary:hover {
+            background: var(--secondary);
+        }
+        
+        /* Floating Elements */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 5px rgba(138, 43, 226, 0.5); }
+            to { box-shadow: 0 0 20px rgba(138, 43, 226, 0.8); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+            
+            .hero {
+                padding: 4rem 5% 3rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .product-grid, .featured-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Header -->
     <header>
-        <a href="#" class="logo">TRENDYLOFT</a>
+        <a href="#" class="logo">
+            <i class="fas fa-bolt"></i>
+            TRENDYLOFT
+        </a>
         <div class="mobile-menu">
             <i class="fas fa-bars"></i>
         </div>
@@ -949,21 +911,24 @@
             <i class="fas fa-shopping-cart"></i>
             <span class="cart-badge">0</span>
         </div>
+        <div class="user-icon">
+            <i class="fas fa-user"></i>
+        </div>
     </header>
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>TRENDYLOFT</h1>
-            <p>Simplicity with a Spark</p>
-            <a href="#products" class="cta-button">Explore Collection</a>
+            <h1 class="animate__animated animate__fadeInDown">TRENDYLOFT</h1>
+            <p class="animate__animated animate__fadeIn animate__delay-1s">Simplicity with a Spark</p>
+            <a href="#products" class="cta-button animate__animated animate__fadeInUp animate__delay-1s">Explore Collection</a>
         </div>
     </section>
     <!-- Product Showcase -->
     <section class="products" id="products">
-        <h2 class="section-title">Our Products</h2>
+        <h2 class="section-title animate__animated animate__fadeIn">Our Products</h2>
         <div class="product-grid">
             <!-- Product 1 -->
-            <div class="product-card">
+            <div class="product-card animate__animated animate__fadeInUp">
                 <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Wireless Earbuds" class="product-image">
                 <div class="product-info">
                     <h3>Wireless Earbuds</h3>
@@ -978,7 +943,7 @@
             </div>
             
             <!-- Product 2 -->
-            <div class="product-card">
+            <div class="product-card animate__animated animate__fadeInUp animate__delay-1s">
                 <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Smart Watch" class="product-image">
                 <div class="product-info">
                     <h3>Fitness Smart Watch</h3>
@@ -993,7 +958,7 @@
             </div>
             
             <!-- Product 3 -->
-            <div class="product-card">
+            <div class="product-card animate__animated animate__fadeInUp animate__delay-2s">
                 <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Portable Charger" class="product-image">
                 <div class="product-info">
                     <h3>Portable Power Bank</h3>
@@ -1008,7 +973,7 @@
             </div>
             
             <!-- Product 4 -->
-            <div class="product-card">
+            <div class="product-card animate__animated animate__fadeInUp animate__delay-3s">
                 <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Bluetooth Speaker" class="product-image">
                 <div class="product-info">
                     <h3>Bluetooth Speaker</h3>
@@ -1025,11 +990,11 @@
     </section>
     <!-- Featured Items -->
     <section class="featured">
-        <h2 class="section-title">Featured Tech</h2>
+        <h2 class="section-title animate__animated animate__fadeIn">Featured Tech</h2>
         <div class="featured-grid">
             <!-- Featured 1 -->
-            <div class="featured-item">
-                <div class="featured-icon">
+            <div class="featured-item animate__animated animate__fadeInUp">
+                <div class="featured-icon glow">
                     <i class="fas fa-mobile-alt"></i>
                 </div>
                 <h3>Smartphones</h3>
@@ -1037,8 +1002,8 @@
             </div>
             
             <!-- Featured 2 -->
-            <div class="featured-item">
-                <div class="featured-icon">
+            <div class="featured-item animate__animated animate__fadeInUp animate__delay-1s">
+                <div class="featured-icon glow">
                     <i class="fas fa-laptop"></i>
                 </div>
                 <h3>Laptops</h3>
@@ -1046,8 +1011,8 @@
             </div>
             
             <!-- Featured 3 -->
-            <div class="featured-item">
-                <div class="featured-icon">
+            <div class="featured-item animate__animated animate__fadeInUp animate__delay-2s">
+                <div class="featured-icon glow">
                     <i class="fas fa-headphones"></i>
                 </div>
                 <h3>Audio</h3>
@@ -1055,8 +1020,8 @@
             </div>
             
             <!-- Featured 4 -->
-            <div class="featured-item">
-                <div class="featured-icon">
+            <div class="featured-item animate__animated animate__fadeInUp animate__delay-3s">
+                <div class="featured-icon glow">
                     <i class="fas fa-camera"></i>
                 </div>
                 <h3>Cameras</h3>
@@ -1066,10 +1031,10 @@
     </section>
     <!-- Contact Section -->
     <section class="contact">
-        <h2 class="section-title">Get in Touch</h2>
+        <h2 class="section-title animate__animated animate__fadeIn">Get in Touch</h2>
         <div class="contact-container">
             <div class="contact-info">
-                <div class="contact-item">
+                <div class="contact-item animate__animated animate__fadeInLeft">
                     <div class="contact-icon">
                         <i class="fas fa-phone"></i>
                     </div>
@@ -1079,7 +1044,7 @@
                     </div>
                 </div>
                 
-                <div class="contact-item">
+                <div class="contact-item animate__animated animate__fadeInLeft animate__delay-1s">
                     <div class="contact-icon">
                         <i class="fas fa-envelope"></i>
                     </div>
@@ -1089,7 +1054,7 @@
                     </div>
                 </div>
                 
-                <div class="contact-item">
+                <div class="contact-item animate__animated animate__fadeInLeft animate__delay-2s">
                     <div class="contact-icon">
                         <i class="fab fa-instagram"></i>
                     </div>
@@ -1099,7 +1064,7 @@
                     </div>
                 </div>
                 
-                <div class="contact-item">
+                <div class="contact-item animate__animated animate__fadeInLeft animate__delay-3s">
                     <div class="contact-icon">
                         <i class="fab fa-whatsapp"></i>
                     </div>
@@ -1110,7 +1075,7 @@
                 </div>
             </div>
             
-            <div class="contact-form">
+            <div class="contact-form animate__animated animate__fadeInRight">
                 <form id="contactForm">
                     <div class="form-group">
                         <label for="name">Your Name</label>
@@ -1196,119 +1161,109 @@
         </div>
     </div>
     
-    <!-- Cart Modal -->
-    <div id="cartModal" class="cart-modal">
-        <div class="cart-content">
-            <div class="cart-header">
-                <h2>Your Cart</h2>
-                <button class="cart-close">&times;</button>
-            </div>
-            <div id="cartItems">
-                <!-- Cart items will be displayed here -->
-            </div>
-            <button class="cart-checkout">Proceed to Checkout</button>
+    <!-- Calculator Popup -->
+    <div id="calculatorPopup" class="calculator-popup">
+        <div class="calculator-header">
+            <div class="calculator-title">Calculator</div>
+            <button class="calculator-close">&times;</button>
         </div>
-    </div>
-    
-    <!-- Checkout Form Modal -->
-    <div id="checkoutModal" class="cart-modal">
-        <div class="cart-content">
-            <div class="cart-header">
-                <h2>Checkout</h2>
-                <button class="cart-close">&times;</button>
-            </div>
-            <div id="checkoutItems">
-                <!-- Cart items will be displayed here -->
-            </div>
-            <div class="checkout-form">
-                <h3 class="checkout-title">Your Information</h3>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="checkoutName">Full Name</label>
-                        <input type="text" id="checkoutName" class="form-control" required>
-                        <div class="error-message" id="nameError">Please enter your full name</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="checkoutEmail">Email Address</label>
-                        <input type="email" id="checkoutEmail" class="form-control" required>
-                        <div class="error-message" id="emailError">Please enter a valid email address</div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="checkoutPhone">Phone Number</label>
-                    <input type="tel" id="checkoutPhone" class="form-control" required>
-                    <div class="error-message" id="phoneError">Please enter your phone number</div>
-                </div>
-                <div class="form-group">
-                    <label for="checkoutAddress">Delivery Address</label>
-                    <textarea id="checkoutAddress" class="form-control" rows="3" required></textarea>
-                    <div class="error-message" id="addressError">Please enter your delivery address</div>
-                </div>
-                <div class="form-checkbox">
-                    <input type="checkbox" id="codOption" checked>
-                    <label for="codOption">Cash on Delivery (COD)</label>
-                </div>
-                <button type="button" class="checkout-btn" id="placeOrderBtn">Place Order</button>
+        <div class="calculator-body">
+            <input type="text" class="calculator-display" id="calcDisplay" readonly>
+            <div class="calculator-buttons">
+                <button class="calculator-btn">7</button>
+                <button class="calculator-btn">8</button>
+                <button class="calculator-btn">9</button>
+                <button class="calculator-btn operator">/</button>
+                <button class="calculator-btn">4</button>
+                <button class="calculator-btn">5</button>
+                <button class="calculator-btn">6</button>
+                <button class="calculator-btn operator">*</button>
+                <button class="calculator-btn">1</button>
+                <button class="calculator-btn">2</button>
+                <button class="calculator-btn">3</button>
+                <button class="calculator-btn operator">-</button>
+                <button class="calculator-btn">0</button>
+                <button class="calculator-btn">.</button>
+                <button class="calculator-btn operator">+</button>
+                <button class="calculator-btn operator equals">=</button>
+                <button class="calculator-btn operator" id="clearBtn">C</button>
             </div>
         </div>
     </div>
     
-    <!-- Bill Modal -->
-    <div id="billModal" class="bill-modal">
-        <div class="bill-content">
-            <div class="bill-header">
-                <h2 class="bill-title">Order Confirmation</h2>
-                <button class="bill-close">&times;</button>
+    <!-- Login/Signup Modal -->
+    <div id="loginModal" class="login-modal">
+        <div class="login-content">
+            <div class="login-header">
+                <h2 class="login-title">Account</h2>
+                <button class="login-close">&times;</button>
             </div>
-            <div class="bill-details">
-                <div class="bill-customer">
-                    <h3>Customer Information</h3>
-                    <div class="bill-customer-info">
-                        <div>
-                            <span>Name:</span>
-                            <span id="billName"></span>
-                        </div>
-                        <div>
-                            <span>Email:</span>
-                            <span id="billEmail"></span>
-                        </div>
-                        <div>
-                            <span>Phone:</span>
-                            <span id="billPhone"></span>
-                        </div>
-                        <div>
-                            <span>Address:</span>
-                            <span id="billAddress"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="bill-items">
-                    <h3>Order Items</h3>
-                    <div id="billItems">
-                        <!-- Order items will be displayed here -->
-                    </div>
-                    <div class="bill-total">
-                        <span class="bill-total-label">Subtotal:</span>
-                        <span class="bill-total-amount" id="billSubtotal"></span>
-                    </div>
-                    <div class="bill-total">
-                        <span class="bill-total-label">Delivery Charges:</span>
-                        <span class="bill-total-amount">PKR 295.00</span>
-                    </div>
-                    <div class="bill-total">
-                        <span class="bill-total-label">Total Amount:</span>
-                        <span class="bill-total-amount" id="billTotal"></span>
-                    </div>
-                </div>
-                <div class="bill-payment">
-                    <p><strong>Payment Method:</strong> Cash on Delivery</p>
-                    <p>Your order will be delivered in 3-5 working days</p>
-                </div>
+            <div class="login-tabs">
+                <div class="login-tab active" id="loginTab">Login</div>
+                <div class="login-tab" id="signupTab">Sign Up</div>
             </div>
-            <div class="bill-actions">
-                <button class="bill-button" id="printBillBtn">Print Bill</button>
-                <button class="bill-button" id="continueShoppingBtn">Continue Shopping</button>
+            <div class="login-form active" id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" class="form-control" required>
+                </div>
+                <button type="button" class="login-button" id="loginButton">Login</button>
             </div>
+            <div class="login-form" id="signupForm">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" class="form-control" required>
+                </div>
+                <button type="button" class="login-button" id="signupButton">Sign Up</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="admin-panel">
+        <div class="admin-header">
+            <div class="admin-title">Admin Panel</div>
+            <button class="admin-close">&times;</button>
+        </div>
+        <div class="admin-body">
+            <div class="admin-actions">
+                <button class="admin-btn primary" id="editProductsBtn">
+                    <i class="fas fa-edit"></i> Edit Products
+                </button>
+                <button class="admin-btn" id="manageOrdersBtn">
+                    <i class="fas fa-clipboard-list"></i> Manage Orders
+                </button>
+                <button class="admin-btn" id="viewReportsBtn">
+                    <i class="fas fa-chart-bar"></i> View Reports
+                </button>
+                <button class="admin-btn" id="settingsBtn">
+                    <i class="fas fa-cog"></i> Settings
+                </button>
+                <button class="admin-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Order Confirmation Modal -->
+    <div id="orderConfirmationModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Order Confirmation</h3>
+            <p class="modal-message">Thank you! Your order has been placed and will be delivered in 3-4 working days.</p>
+            <button class="modal-button" id="closeOrderModal">Close</button>
         </div>
     </div>
     
@@ -1319,10 +1274,20 @@
         <div class="notification-message">Notification message goes here</div>
     </div>
 
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
     <script>
+        // Initialize EmailJS
+        (function(){
+            emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
+        })();
+        
         // Modal functionality
         const modal = document.getElementById('confirmationModal');
         const closeModal = document.getElementById('closeModal');
+        const orderModal = document.getElementById('orderConfirmationModal');
+        const closeOrderModal = document.getElementById('closeOrderModal');
         
         function showModal() {
             modal.style.display = 'flex';
@@ -1332,12 +1297,24 @@
             modal.style.display = 'none';
         }
         
+        function showOrderModal() {
+            orderModal.style.display = 'flex';
+        }
+        
+        function hideOrderModal() {
+            orderModal.style.display = 'none';
+        }
+        
         closeModal.addEventListener('click', hideModal);
+        closeOrderModal.addEventListener('click', hideOrderModal);
         
         // Close modal when clicking outside
         window.addEventListener('click', function(event) {
             if (event.target === modal) {
                 hideModal();
+            }
+            if (event.target === orderModal) {
+                hideOrderModal();
             }
         });
         
@@ -1348,14 +1325,20 @@
             const email = document.getElementById('email').value;
             const message = document.getElementById('message').value;
             
-            // In a real implementation, you would send this data to a server
-            console.log('Form submitted:', { name, email, message });
-            
-            // Show confirmation modal
-            showModal();
-            
-            // Reset form
-            this.reset();
+            // Send email using EmailJS
+            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+                from_name: name,
+                from_email: email,
+                message: message
+            })
+            .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+                showModal();
+                this.reset();
+            }, function(error) {
+                console.log('FAILED...', error);
+                alert('There was an error sending your message. Please try again.');
+            });
         });
         
         // Newsletter subscription
@@ -1364,14 +1347,19 @@
             const email = this.querySelector('input[type="email"]').value;
             
             if (email) {
-                // In a real implementation, you would send this data to a server
-                console.log('Newsletter subscription:', email);
-                
-                // Show confirmation modal
-                showModal();
-                
-                // Reset form
-                this.reset();
+                // Send email using EmailJS
+                emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+                    from_email: email,
+                    message: "Newsletter subscription request"
+                })
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    showModal();
+                    this.reset();
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    alert('There was an error with your subscription. Please try again.');
+                });
             } else {
                 alert('Please enter your email address.');
             }
@@ -1577,16 +1565,22 @@
             checkoutModal.style.display = 'none';
             billModal.style.display = 'flex';
             
-            // Send order details to WhatsApp
+            // Send order details to email
             const orderDetails = `New Order!\n\nCustomer: ${name}\nEmail: ${email}\nPhone: ${phone}\nAddress: ${address}\n\nItems:\n${cart.map(item => `- ${item.name}: $${item.price.replace('$', '')} (Code: ${item.code})`).join('\n')}\n\nSubtotal: PKR ${Math.round(totalUSD * 280).toFixed(2)}\nDelivery: PKR ${deliveryChargePKR.toFixed(2)}\nTotal: PKR ${totalPKR.toFixed(2)}\n\nPayment: Cash on Delivery\nDelivery: 3-5 days`;
             
-            window.open(`https://wa.me/9233473486669?text=${encodeURIComponent(orderDetails)}`);
-            
-            // Send to email
-            const emailSubject = `New Order: ${name}`;
-            const emailBody = `Customer Information:\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nAddress: ${address}\n\nOrder Details:\n${orderDetails}`;
-            
-            window.location.href = `mailto:muji10@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+            // Send to email using EmailJS
+            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+                from_name: "TRENDYLOFT",
+                from_email: "muji10@gmail.com",
+                to_email: "muji10@gmail.com",
+                subject: "New Order Confirmation",
+                message: orderDetails
+            })
+            .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+            }, function(error) {
+                console.log('FAILED...', error);
+            });
         });
         
         // Bill modal actions
@@ -1600,17 +1594,10 @@
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCartBadge();
             closeCart();
-            showNotification('Order Placed', 'Your order has been placed successfully. You will receive a confirmation message shortly.');
+            showOrderModal();
         });
         
         document.querySelector('.bill-close').addEventListener('click', closeCart);
-        
-        // Close bill when clicking outside
-        window.addEventListener('click', function(event) {
-            if (event.target === billModal) {
-                closeCart();
-            }
-        });
         
         // Buy button functionality
         document.querySelectorAll('.buy-button').forEach(button => {
@@ -1643,10 +1630,6 @@
                 setTimeout(() => {
                     deliveryNotification.style.display = 'none';
                 }, 3000);
-                
-                // Send to WhatsApp (simulated)
-                const message = `New Order!\nProduct: ${productName}\nPrice: ${price}\nOrder Code: ${orderCode}\nCustomer: [Customer Info]`;
-                window.open(`https://wa.me/9233473486669?text=${encodeURIComponent(message)}`);
             });
         });
         
@@ -1671,6 +1654,116 @@
                     showNotification('Added to Wishlist', `${productName} has been added to your wishlist`);
                 }
             });
+        });
+        
+        // Calculator functionality
+        const calculatorPopup = document.getElementById('calculatorPopup');
+        const calculatorDisplay = document.getElementById('calcDisplay');
+        
+        document.querySelector('.cart-icon').addEventListener('click', function(e) {
+            if (e.target.closest('.user-icon')) return;
+            openCart();
+        });
+        
+        document.querySelector('.user-icon').addEventListener('click', function() {
+            document.getElementById('loginModal').style.display = 'flex';
+        });
+        
+        // Calculator buttons
+        document.querySelectorAll('.calculator-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const value = this.textContent;
+                
+                if (value === '=') {
+                    try {
+                        calculatorDisplay.value = eval(calculatorDisplay.value);
+                    } catch (e) {
+                        calculatorDisplay.value = 'Error';
+                    }
+                } else if (value === 'C') {
+                    calculatorDisplay.value = '';
+                } else {
+                    calculatorDisplay.value += value;
+                }
+            });
+        });
+        
+        // Calculator close button
+        document.querySelector('.calculator-close').addEventListener('click', function() {
+            calculatorPopup.style.display = 'none';
+        });
+        
+        // Login/Signup functionality
+        const loginModal = document.getElementById('loginModal');
+        const loginTab = document.getElementById('loginTab');
+        const signupTab = document.getElementById('signupTab');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const loginButton = document.getElementById('loginButton');
+        const signupButton = document.getElementById('signupButton');
+        const adminPanel = document.getElementById('adminPanel');
+        
+        loginTab.addEventListener('click', function() {
+            loginTab.classList.add('active');
+            signupTab.classList.remove('active');
+            loginForm.classList.add('active');
+            signupForm.classList.remove('active');
+        });
+        
+        signupTab.addEventListener('click', function() {
+            signupTab.classList.add('active');
+            loginTab.classList.remove('active');
+            signupForm.classList.add('active');
+            loginForm.classList.remove('active');
+        });
+        
+        loginButton.addEventListener('click', function() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (email && password) {
+                // Check if admin
+                if (email === 'muhammadmustafa7897741@gmail.com') {
+                    loginModal.style.display = 'none';
+                    adminPanel.style.display = 'block';
+                    showNotification('Admin Access', 'Welcome to the admin panel!');
+                } else {
+                    showNotification('Login Successful', 'Welcome back!');
+                    loginModal.style.display = 'none';
+                }
+            } else {
+                alert('Please fill in all fields');
+            }
+        });
+        
+        signupButton.addEventListener('click', function() {
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            
+            if (name && email && password) {
+                showNotification('Sign Up Successful', 'Your account has been created!');
+                loginModal.style.display = 'none';
+            } else {
+                alert('Please fill in all fields');
+            }
+        });
+        
+        // Admin panel actions
+        document.querySelector('.admin-close').addEventListener('click', function() {
+            adminPanel.style.display = 'none';
+        });
+        
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            adminPanel.style.display = 'none';
+            showNotification('Logged Out', 'You have been logged out successfully.');
+        });
+        
+        // Close login modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === loginModal) {
+                loginModal.style.display = 'none';
+            }
         });
         
         // Initialize cart and wishlist from localStorage
